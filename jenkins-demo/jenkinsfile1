@@ -1,23 +1,24 @@
 pipeline {
-	agent any
+    agent any
   
   environment {
-	MY_LOG = 'This is my log level'
-	RELEASE = '0.4'
+    MY_LOG = 'This is my log level'
 
  }
-	stages {
-		stage('Build') {
-		agent any
-		
-	steps {
-	echo "Buildingg realease ${RELEASE} with log level ${MY_LOG}"
+    stages {
+        stage('Build') {
+        agent any
+        environemnt {
+        RELEASE = '0.4'
+    }
+    steps {
+    echo "Buildingg realease ${RELEASE} with log level ${MY_LOG}"
 
 }
 }
-	stage('Test') {
-	steps {
-	echo "Testing. I can see my log ${MY_LOG}, but not release ${RELEASE}"
+    stage('Test') {
+    steps {
+    echo "Testing. I can see my log ${MY_LOG}, but not release ${RELEASE}"
 }
 }
 }
