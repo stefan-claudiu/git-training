@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    environment {
+        RELEASE_VERSION = 'R.02'
+        VERSION = '0.02'
+    }
+
+    stages {
+        stage('Audit Tool') {
+            steps {
+                sh '''
+                    git --version
+                    java --version
+                    mvn -version
+                '''
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                echo "The version is ${VERSION}"
+                sh '''
+                echo "Executing unit test"
+                mvn clean install
+                mvn test
+                '''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Executing build stage ${RELEASE_VERSION}"
+                sh '''
+                mvn clean
+                '''
+            }
+        }
+    }
+}
