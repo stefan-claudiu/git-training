@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environemnt {
+    environment {
         RELEASE = '0.4'
     }
 
@@ -11,10 +11,10 @@ pipeline {
             }
         }
 
-		stage('Test') {
-			steps {
-				echo "This are the steps...."
-			}
-		}
+        stage('Test') {
+            steps {
+                echo "This are the steps...."
+            }
+        }
     }
 }
