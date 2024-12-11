@@ -1,25 +1,20 @@
 pipeline {
     agent any
-  
-  environment {
-    MY_LOG = 'This is my log level'
-
- }
-    stages {
-        stage('Build') {
-        agent any
-        environemnt {
+    environemnt {
         RELEASE = '0.4'
     }
-    steps {
-    echo "Buildingg realease ${RELEASE} with log level ${MY_LOG}"
 
-}
-}
-    stage('Test') {
-    steps {
-    echo "Testing. I can see my log ${MY_LOG}, but not release ${RELEASE}"
-}
-}
-}
+    stages {
+        stage('Build') {
+            steps {
+                echo "This is the release ${RELEASE}"
+            }
+        }
+
+		stage('Test') {
+			steps {
+				echo "This are the steps...."
+			}
+		}
+    }
 }
