@@ -3,14 +3,13 @@ pipeline {
   
   environment {
 	MY_LOG = 'This is my log level'
+	RELEASE = '0.4'
 
  }
 	stages {
 		stage('Build') {
 		agent any
-		environment {
-		RELEASE = '0.4'
-	}
+		
 	steps {
 	echo "Buildingg realease ${RELEASE} with log level ${MY_LOG}"
 
