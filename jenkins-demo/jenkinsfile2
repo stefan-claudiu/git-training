@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    environment {
+        RELEASE = '0.4'
+    }
+
+    stages {
+        stage('Build') {
+            environment {
+                MY_LOGS = 'INFO'
+            }
+            steps {
+                echo "This is the release ${RELEASE} and my logs are ${MY_LOGS}"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "This are the steps...."
+            }
+        }
+
+        stage('Deploy') {
+            input {
+                message 'Deploy'
+                ok 'Do it!'
+                parameters {
+                    string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deplyment')
+                }
+            }
+            steps {
+                echo "Deploing release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Prints whether deploy happened or not, success or failure"
+        }
+    }
+}
