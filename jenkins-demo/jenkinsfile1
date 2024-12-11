@@ -8,7 +8,7 @@ pipeline {
 	stages {
 		stage('Build') {
 		agent any
-		environemnt {
+		environment {
 		RELEASE = '0.4'
 	}
 	steps {
