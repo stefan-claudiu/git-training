@@ -31,7 +31,7 @@ pipeline {
         stage('Build') {
             steps {
                
-                echo "Executing build stage ${RELEASE_VERSION}"
+                getBuildVersion()
                 sh '''
                 mvn clean
                 '''
@@ -40,7 +40,9 @@ pipeline {
 
         stage('Publish') {
             steps {
-                archiveArtifacts('**/*.war')
+                sh '''
+                echo "Ana are mere"
+                '''
             }
         }
     }
@@ -53,3 +55,11 @@ void auditTools() {
                     mvn --version
         '''
     }
+
+String getBuildVersion() {
+    if (params.RELEASE) {
+        return env.RELEASE_VERSION + ':' + env.VERSION 
+    } else {
+        return env.VERSION
+    }
+}
