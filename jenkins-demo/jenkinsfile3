@@ -1,6 +1,10 @@
 pipeline {
     agent any
-    
+
+    parameters {
+        booleanParam(name: 'RELEASE', defaultValue: 'false', description: 'Is this a release version?')
+    }
+
     environment {
         RELEASE_VERSION = 'R.02'
         VERSION = '0.02'
@@ -9,11 +13,7 @@ pipeline {
     stages {
         stage('Audit Tool') {
             steps {
-                sh '''
-                    git --version
-                    java --version
-                    mvn --version
-                '''
+                auditTools()
             }
         }
 
@@ -30,11 +30,27 @@ pipeline {
 
         stage('Build') {
             steps {
+               
                 echo "Executing build stage ${RELEASE_VERSION}"
                 sh '''
                 mvn clean
                 '''
             }
         }
+
+        stage('Publish') {
+            steps {
+                archiveArtifacts('**/*.war')
+            }
+        }
+    }
+
+
+    void auditTools() {
+        sh '''
+                git --version
+                    java --version
+                    mvn --version
+        '''
     }
 }
