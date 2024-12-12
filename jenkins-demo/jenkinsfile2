@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:latest'
+        }
+    }
+
     environment {
         RELEASE = '0.4'
     }
@@ -16,18 +21,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo "This are the steps...."
+                echo 'This are the steps....'
             }
         }
 
         stage('Deploy') {
-            input {
-                message 'Deploy?'
-                ok 'Do it!'
-                parameters {
-                    string(name: 'TARGET_ENVIRONMENT', defaultValue: 'PROD', description: 'Target deployment')
-                }
-            }
             steps {
                 echo "Deploing release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
             }
@@ -36,7 +34,7 @@ pipeline {
 
     post {
         always {
-            echo "Prints whether deploy happened or not, success or failure"
+            echo 'Prints whether deploy happened or not, success or failure'
         }
     }
 }
