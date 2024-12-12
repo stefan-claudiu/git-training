@@ -28,7 +28,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploing release ${RELEASE} to environment ${TARGET_ENVIRONMENT}"
+                echo "Deploing release ${RELEASE} to environment"
             }
         }
     }
